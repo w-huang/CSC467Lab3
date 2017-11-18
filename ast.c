@@ -122,8 +122,8 @@ void ast_print(node * ast) {
   //print children. Depends on what type of node it is
   switch(kind) {
     case SCOPE_NODE:
-      ast_print(node->scope.declarations);
-      ast_print(node->scope.statements);
+      ast_print(ast->scope.declarations);
+      ast_print(ast->scope.statements);
       break;
     case EXPRESSION_NODE:
       break;
