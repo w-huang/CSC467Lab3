@@ -73,7 +73,7 @@ enum {
 %token          BOOL_T
 %token          CONST
 %token          FALSE_C TRUE_C
-%token          FUNC
+%token <as_func> FUNC
 %token          IF ELSE
 %token          AND OR NEQ EQ LEQ GEQ
 
@@ -168,7 +168,7 @@ declaration
       {   $$ = ast_allocate(DECLARATION_NODE, 0, $2, $1, $4);
           yTRACE("declaration -> type ID = expression ;\n") }
   | CONST type ID '=' expression ';'
-      {   $$ = ast_allocate(DECLARATION_NODE, 1, $2, $1, $5);
+      {   $$ = ast_allocate(DECLARATION_NODE, 1, $3, $2, $5);
           yTRACE("declaration -> CONST type ID = expression ;\n") }
   ;
 
@@ -307,7 +307,7 @@ arguments
       {   $$ = ast_allocate(ARGUMENTS_NODE, $1, $3);
           yTRACE("arguments -> arguments , expression \n") }
   | expression
-      {   $$ = ast_allocate(ARGUMENTS_NODE, NULL, $3);
+      {   $$ = ast_allocate(ARGUMENTS_NODE, NULL, $1);
           yTRACE("arguments -> expression \n") }
   ;
 
