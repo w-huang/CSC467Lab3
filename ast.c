@@ -23,85 +23,84 @@ node *ast_allocate(node_kind kind, ...) {
   va_start(args, kind); 
 
   switch(kind) {
-  
-  case SCOPE_NODE:
-    ast->scope.declarations = va_arg(args, node*);
-    ast->scope.statements = va_arg(args,node*);
-    break;
-  case EXPRESSION_NODE:
-    break;
-  case UNARY_EXPRESION_NODE:
-    ast->unary_expr.op = va_arg(args, int);
-    ast->unary_expr.right = va_arg(args,node*);
-    break;
-  case BINARY_EXPRESSION_NODE:
-    ast->binary_expr.op = va_arg(args, int);
-    ast->binary_expr.left = va_arg(args, node *);
-    ast->binary_expr.right = va_arg(args, node *);  
-    break;
-  case INT_NODE:
-    ast->int_node.val = va_arg(args,int);
-    break;
-  case FLOAT_NODE:
-    ast->float_node.val = va_arg(args,double);
-    break;
-  case VAR_NODE:
-    ast->var_node.id = va_arg(args, char*);
-    ast->var_node.is_array = va_arg(args, int);
-    ast->var_node.array_index = va_arg(args, int);
-    break;
-  case FUNCTION_NODE:
-    ast->function_node.function = va_arg(args, int);
-    ast->function_node.arguments = va_arg(args, node*);
-    break;
-  case CONSTRUCTOR_NODE:
-    ast->constructor_node.type = va_arg(args,node*);
-    ast->constructor_node.arguments = va_arg(args, node*);
-    break;
-  case TYPE_NODE:
-    ast->type_node.token_type = va_arg(args, int);
-    ast->type_node.length = va_arg(args, int);
-    break;
-  case BOOL_NODE:
-    ast->bool_node.value = va_arg(args,int);
-    break;
-  case STATEMENT_NODE:
-    ast->statement_node.variable = va_arg(args, node*);
-    ast->statement_node.expression = va_arg(args, node*);
-    break;
-  case STATEMENTS_NODE:
-    ast->statements_node.statements = va_arg(args,node*);
-    ast->statements_node.statement = va_arg(args, node*);
-    break;
-  case ARGUMENTS_NODE:
-    ast->arguments_node.arguments = va_arg(args, node*);
-    ast->arguments_node.expression = va_arg(args, node*);
-    break;
-  case EXPRESSION_VAR:
-    ast->expression_var_node.var = va_arg(args,node*);
-    break;
-  case NESTED_EXPRESSION_NODE:
-    ast->nested_expression_node.expression = va_arg(args,node*);
-    break;
-  case IF_STATEMENT_NODE:
-    ast->if_statement_node.condition = va_arg(args, node*);
-    ast->if_statement_node.bodyStatement = va_arg(args, node*);
-    ast->if_statement_node.else_statement = va_arg(args, node*);
-    break;
-  case NESTED_SCOPE_NODE:
-    ast->nested_scope_node.scope = va_arg(args, node*);
-    break;
-  case DECLARATIONS_NODE:
-    ast->declarations_node.declarations = va_arg(args, node*);
-    ast->declarations_node.declaration = va_arg(args, node*);
-    break;
-  case DECLARATION_NODE:
-    ast->declaration_node.is_const = va_arg(args, int);
-    ast->declaration_node.id = va_arg(args, char*);    
-    ast->declaration_node.type = va_arg(args, node*);
-    ast->declaration_node.expression = va_arg(args, node*);
-    break;
-  default: break;
+    case SCOPE_NODE:
+      ast->scope.declarations = va_arg(args, node*);
+      ast->scope.statements = va_arg(args,node*);
+      break;
+    case EXPRESSION_NODE:
+      break;
+    case UNARY_EXPRESION_NODE:
+      ast->unary_expr.op = va_arg(args, int);
+      ast->unary_expr.right = va_arg(args,node*);
+      break;
+    case BINARY_EXPRESSION_NODE:
+      ast->binary_expr.op = va_arg(args, int);
+      ast->binary_expr.left = va_arg(args, node *);
+      ast->binary_expr.right = va_arg(args, node *);  
+      break;
+    case INT_NODE:
+      ast->int_node.val = va_arg(args,int);
+      break;
+    case FLOAT_NODE:
+      ast->float_node.val = va_arg(args,double);
+      break;
+    case VAR_NODE:
+      ast->var_node.id = va_arg(args, char*);
+      ast->var_node.is_array = va_arg(args, int);
+      ast->var_node.array_index = va_arg(args, int);
+      break;
+    case FUNCTION_NODE:
+      ast->function_node.function = va_arg(args, int);
+      ast->function_node.arguments = va_arg(args, node*);
+      break;
+    case CONSTRUCTOR_NODE:
+      ast->constructor_node.type = va_arg(args,node*);
+      ast->constructor_node.arguments = va_arg(args, node*);
+      break;
+    case TYPE_NODE:
+      ast->type_node.token_type = va_arg(args, int);
+      ast->type_node.length = va_arg(args, int);
+      break;
+    case BOOL_NODE:
+      ast->bool_node.value = va_arg(args,int);
+      break;
+    case STATEMENT_NODE:
+      ast->statement_node.variable = va_arg(args, node*);
+      ast->statement_node.expression = va_arg(args, node*);
+      break;
+    case STATEMENTS_NODE:
+      ast->statements_node.statements = va_arg(args,node*);
+      ast->statements_node.statement = va_arg(args, node*);
+      break;
+    case ARGUMENTS_NODE:
+      ast->arguments_node.arguments = va_arg(args, node*);
+      ast->arguments_node.expression = va_arg(args, node*);
+      break;
+    case EXPRESSION_VAR:
+      ast->expression_var_node.var = va_arg(args,node*);
+      break;
+    case NESTED_EXPRESSION_NODE:
+      ast->nested_expression_node.expression = va_arg(args,node*);
+      break;
+    case IF_STATEMENT_NODE:
+      ast->if_statement_node.condition = va_arg(args, node*);
+      ast->if_statement_node.bodyStatement = va_arg(args, node*);
+      ast->if_statement_node.else_statement = va_arg(args, node*);
+      break;
+    case NESTED_SCOPE_NODE:
+      ast->nested_scope_node.scope = va_arg(args, node*);
+      break;
+    case DECLARATIONS_NODE:
+      ast->declarations_node.declarations = va_arg(args, node*);
+      ast->declarations_node.declaration = va_arg(args, node*);
+      break;
+    case DECLARATION_NODE:
+      ast->declaration_node.is_const = va_arg(args, int);
+      ast->declaration_node.id = va_arg(args, char*);    
+      ast->declaration_node.type = va_arg(args, node*);
+      ast->declaration_node.expression = va_arg(args, node*);
+      break;
+    default: break;
   }
 
   va_end(args);
@@ -111,6 +110,84 @@ node *ast_allocate(node_kind kind, ...) {
 
 void ast_free(node *ast) {
 
+    if (ast == NULL) {
+      //leaf NULL node, do nothing;
+      return;
+    }
+
+    //free children NODES first. Depends on what type of node it is
+    switch(kind) {
+      case SCOPE_NODE:
+        ast_free(ast->scope.declarations);
+        ast_free(ast->scope.statements);
+        break;
+      case UNARY_EXPRESION_NODE:
+        ast_free(ast->unary_expr.right);
+        break;
+      case BINARY_EXPRESSION_NODE:
+        ast_free(ast->binary_expr.left);
+        ast_free(ast->binary_expr.right);
+        break;
+      case INT_NODE:
+        break;
+      case FLOAT_NODE:
+        break;
+      case VAR_NODE:
+        free(ast->var_node.id);
+        break;
+      case FUNCTION_NODE:
+        ast_free(ast->function_node.arguments);
+        break;
+      case CONSTRUCTOR_NODE:
+        ast_free(ast->constructor_node.type);
+        ast_free(ast->constructor_node.arguments);
+        break;
+      case TYPE_NODE:
+        break;
+      case BOOL_NODE:
+        break;
+      case STATEMENT_NODE:
+        ast_free(ast->statement_node.variable);
+        ast_free(ast->statement_node.expression);
+        break;
+      case STATEMENTS_NODE:
+        ast_free(ast->statements_node.statements);
+        ast_free(ast->statements_node.statement);
+        break;
+      case ARGUMENTS_NODE:
+        ast_free(ast->arguments_node.arguments);
+        ast_free(ast->arguments_node.expression);
+        break;
+      case EXPRESSION_VAR:
+        ast_free(ast->expression_var_node.var);
+        break;
+      case NESTED_EXPRESSION_NODE:
+        ast_free(ast->nested_expression_node.expression);
+        break;
+      case IF_STATEMENT_NODE:
+        ast_free(ast->if_statement_node.condition);
+        ast_free(ast->if_statement_node.bodyStatement);
+        ast_free(ast->if_statement_node.else_statement);
+        break;
+      case NESTED_SCOPE_NODE:
+        ast_free(ast->nested_scope_node.scope);
+        break;
+      case DECLARATIONS_NODE:
+        ast_free(ast->declarations_node.declarations);
+        ast_free(ast->declarations_node.declaration);
+        break;
+      case DECLARATION_NODE:
+        ast_free(ast->declaration_node.type);
+        ast_free(ast->declaration_node.expression);
+        free(ast->declaration_node.id);
+        break;
+      default: 
+      break;
+    }
+
+    //free self
+    free(ast);
+    return;
 }
 
 void ast_print(node * ast) {
@@ -129,9 +206,6 @@ void ast_print(node * ast) {
     case SCOPE_NODE:
       ast_print(ast->scope.declarations);
       ast_print(ast->scope.statements);
-      break;
-    case EXPRESSION_NODE:
-      //do nothing
       break;
     case UNARY_EXPRESION_NODE:
       printf("UNARY_OP[%d]", ast->unary_expr.op);
@@ -211,6 +285,8 @@ void ast_print(node * ast) {
     default: 
     break;
   }
+
+
 }
 
 void print_node_type(node* ast) {
