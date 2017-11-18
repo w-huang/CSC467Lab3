@@ -97,8 +97,8 @@ node *ast_allocate(node_kind kind, ...) {
     break;
   case DECLARATION_NODE:
     ast->declaration_node.is_const = va_arg(args, int);
+    ast->declaration_node.id = va_arg(args, char*);    
     ast->declaration_node.type = va_arg(args, node*);
-    ast->declaration_node.id = va_arg(args, char*);
     ast->declaration_node.expression = va_arg(args, node*);
     break;
   default: break;
@@ -120,6 +120,7 @@ void ast_print(node * ast) {
     return;
   }
   node_kind kind = ast->kind; //important metadata
+
   //printing is pre-order: print self first
   print_node_type(ast);
 
@@ -204,7 +205,7 @@ void ast_print(node * ast) {
     case DECLARATION_NODE:
       printf("DECLARATION_ISCONST[%d]\n", ast->declaration_node.is_const); //isconst
       ast_print(ast->declaration_node.type);
-      printf("DECLARATION_NAME[%s]", ast->declaration_node.id); //id
+      printf("DECLARATION_NAME[%s]\n", ast->declaration_node.id); //id
       ast_print(ast->declaration_node.expression);
       break;
     default: 
