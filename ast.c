@@ -43,7 +43,7 @@ node *ast_allocate(node_kind kind, ...) {
     ast->int_node.val = va_arg(args,int);
     break;
   case FLOAT_NODE:
-    ast->float_node.val = va_arg(args,float);
+    ast->float_node.val = va_arg(args,double);
     break;
   case VAR_NODE:
     ast->var_node.id = va_arg(args, char*);
@@ -75,7 +75,7 @@ node *ast_allocate(node_kind kind, ...) {
     break;
   case ARGUMENTS_NODE:
     ast->arguments_node.arguments = va_arg(args, node*);
-    ast->arguments_node.statements = va_arg(args, node*);
+    ast->arguments_node.expression = va_arg(args, node*);
     break;
   case EXPRESSION_VAR:
     ast->expression_var_node.var = va_arg(args,node*);

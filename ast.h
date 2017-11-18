@@ -91,7 +91,7 @@ struct node_ {
 
     struct {
       node* arguments;
-      int* function;
+      int function;
     } function_node;
 
     struct {
