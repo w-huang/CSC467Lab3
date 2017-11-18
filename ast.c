@@ -27,8 +27,6 @@ node *ast_allocate(node_kind kind, ...) {
       ast->scope.declarations = va_arg(args, node*);
       ast->scope.statements = va_arg(args,node*);
       break;
-    case EXPRESSION_NODE:
-      break;
     case UNARY_EXPRESION_NODE:
       ast->unary_expr.op = va_arg(args, int);
       ast->unary_expr.right = va_arg(args,node*);
@@ -115,6 +113,7 @@ void ast_free(node *ast) {
       return;
     }
 
+    node_kind kind = ast->kind;
     //free children NODES first. Depends on what type of node it is
     switch(kind) {
       case SCOPE_NODE:
@@ -294,9 +293,6 @@ void print_node_type(node* ast) {
   switch(kind) {
     case SCOPE_NODE:
       printf("SCOPE\n");
-      break;
-    case EXPRESSION_NODE:
-      printf("EXPRESSION\n");
       break;
     case UNARY_EXPRESION_NODE:
       printf("UNARY_EXPRESSION\n");
