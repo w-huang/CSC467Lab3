@@ -69,7 +69,7 @@ struct node_ {
     } unary_expr;
     
     struct {
-      int op
+      int op;
       node *left;
       node *right;
     } binary_expr;
