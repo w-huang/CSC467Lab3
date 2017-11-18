@@ -26,7 +26,7 @@
 #define YYERROR_VERBOSE
 #define yTRACE(x) { if (traceParser) fprintf(traceFile, "%s\n", x); }
 
-void yyerror(char* s);    /* what to do in case of error            */
+void yyerror(const char* s);    /* what to do in case of error            */
 int yylex();              /* procedure for calling lexical analyzer */
 extern int yyline;        /* variable holding current line number   */
 
@@ -147,7 +147,7 @@ declarations
       {   $$ = ast_allocate(DECLARATIONS_NODE, $1, $2);
           yTRACE("declarations -> declarations declaration\n") }
   | 
-      {   $$ = NULL
+      {   $$ = NULL;
           yTRACE("declarations -> \n") }
   ;
 
@@ -186,7 +186,7 @@ statement
       {   $$ = ast_allocate(NESTED_SCOPE_NODE, $1);
           yTRACE("statement -> scope \n") }
   | ';'
-      {   $$ = NULL
+      {   $$ = NULL;
           yTRACE("statement -> ; \n") }
   ;
 
