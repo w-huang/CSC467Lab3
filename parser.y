@@ -101,7 +101,17 @@ enum {
 
 // type declarations
 // TODO: fill this out
+%type <as_ast> scope
+%type <as_ast> declarations
+%type <as_ast> statements
+%type <as_ast> declaration
+%type <as_ast> statement
+%type <as_ast> type
 %type <as_ast> expression
+%type <as_ast> variable
+%type <as_ast> arguments
+%type <as_ast> arguments_opt
+
 
 // expect one shift/reduce conflict, where Bison chooses to shift
 // the ELSE.
