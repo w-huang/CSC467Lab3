@@ -24,7 +24,7 @@
 #include "semantic.h"
 
 #define YYERROR_VERBOSE
-#define yTRACE(x)    { if (traceParser) fprintf(traceFile, "%s\n", x); }
+#define yTRACE(x) { if (traceParser) fprintf(traceFile, "%s\n", x); }
 
 void yyerror(char* s);    /* what to do in case of error            */
 int yylex();              /* procedure for calling lexical analyzer */
