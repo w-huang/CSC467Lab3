@@ -9,6 +9,7 @@
 
 #define DEBUG_PRINT_TREE 0
 
+//hello
 node *ast = NULL;
 
 node *ast_allocate(node_kind kind, ...) {
