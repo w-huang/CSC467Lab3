@@ -22,7 +22,6 @@ typedef enum {
   UNKNOWN               = 0,
 
   SCOPE_NODE            = (1 << 0),
-  
   EXPRESSION_NODE       = (1 << 2),
   UNARY_EXPRESION_NODE  = (1 << 2) | (1 << 3),
   BINARY_EXPRESSION_NODE= (1 << 2) | (1 << 4),
@@ -32,13 +31,20 @@ typedef enum {
   VAR_NODE              = (1 << 2) | (1 << 8),
   FUNCTION_NODE         = (1 << 2) | (1 << 9),
   CONSTRUCTOR_NODE      = (1 << 2) | (1 << 10),
+  TYPE_NODE             = (1 << 2) | (1 << 11),
+  BOOL_NODE             = (1 <<2 ) | (1 << 12),
 
-  STATEMENT_NODE        = (1 << 1),
+  STATEMENT_NODE        = (1 << 1),  
+  STATEMENTS_NODE       = (1 << 1) | (1 << 2),
+
+  ARGUMENTS_NODE        = (1 << 1) | (1 << 8),
+  EXPRESSION_VAR        = (1 << 1) | (1 << 9),
+  NESTED_EXPRESSION_NODE= (1 << 1) | (1 << 10),
   IF_STATEMENT_NODE     = (1 << 1) | (1 << 11),
   WHILE_STATEMENT_NODE  = (1 << 1) | (1 << 12),
   ASSIGNMENT_NODE       = (1 << 1) | (1 << 13),
   NESTED_SCOPE_NODE     = (1 << 1) | (1 << 14),
-
+  DECLARATIONS_NODE     = (1 << 1) | (1 << 15),
   DECLARATION_NODE      = (1 << 15)
 } node_kind;
 
@@ -52,7 +58,7 @@ struct node_ {
       // declarations?
       // statements?
     } scope;
-  
+    
     struct {
       int op;
       node *right;
@@ -63,6 +69,83 @@ struct node_ {
       node *left;
       node *right;
     } binary_expr;
+
+    // struct {
+    //   // declarations?
+    //   // statements?
+    // } scope;
+    
+    // struct {
+    //   int op;
+    //   node *right;
+    // } unary_expr;
+
+    // struct {
+    //   int op;
+    //   node *left;
+    //   node *right;
+    // } binary_expr;
+    // struct {
+    //   // declarations?
+    //   // statements?
+    // } scope;
+    
+    // struct {
+    //   int op;
+    //   node *right;
+    // } unary_expr;
+
+    // struct {
+    //   int op;
+    //   node *left;
+    //   node *right;
+    // } binary_expr;
+    // struct {
+    //   // declarations?
+    //   // statements?
+    // } scope;
+    
+    // struct {
+    //   int op;
+    //   node *right;
+    // } unary_expr;
+
+    // struct {
+    //   int op;
+    //   node *left;
+    //   node *right;
+    // } binary_expr;
+    // struct {
+    //   // declarations?
+    //   // statements?
+    // } scope;
+    
+    // struct {
+    //   int op;
+    //   node *right;
+    // } unary_expr;
+
+    // struct {
+    //   int op;
+    //   node *left;
+    //   node *right;
+    // } binary_expr;
+    // struct {
+    //   // declarations?
+    //   // statements?
+    // } scope;
+    
+    // struct {
+    //   int op;
+    //   node *right;
+    // } unary_expr;
+
+    // struct {
+    //   int op;
+    //   node *left;
+    //   node *right;
+    // } binary_expr;
+
 
     // etc.
   };
