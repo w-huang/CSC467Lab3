@@ -24,16 +24,51 @@ node *ast_allocate(node_kind kind, ...) {
 
   switch(kind) {
   
-  // ...
-
+  case SCOPE_NODE:
+    break;
+  case EXPRESSION_NODE:
+    break;
+  case UNARY_EXPRESION_NODE:
+    break;
   case BINARY_EXPRESSION_NODE:
     ast->binary_expr.op = va_arg(args, int);
     ast->binary_expr.left = va_arg(args, node *);
-    ast->binary_expr.right = va_arg(args, node *);
+    ast->binary_expr.right = va_arg(args, node *);  
     break;
-
-  // ...
-
+  case INT_NODE:
+    break;
+  case FLOAT_NODE:
+    break;
+  case VAR_NODE:
+    break;
+  case FUNCTION_NODE:
+    break;
+  case CONSTRUCTOR_NODE:
+    break;
+  case TYPE_NODE:
+    break;
+  case BOOL_NODE:
+    break;
+  case STATEMENT_NODE:
+    break;
+  case STATEMENTS_NODE:
+    break;
+  case ARGUMENTS_NODE:
+    break;
+  case EXPRESSION_VAR:
+    break;
+  case NESTED_EXPRESSION_NODE:
+    break;
+  case IF_STATEMENT_NODE:
+    break;
+  case ASSIGNMENT_NODE:
+    break;
+  case NESTED_SCOPE_NODE:
+    break;
+  case DECLARATIONS_NODE:
+    break;
+  case DECLARATION_NODE:
+    break;
   default: break;
   }
 

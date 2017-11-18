@@ -55,30 +55,106 @@ struct node_ {
 
   union {
     struct {
-      // declarations?
-      // statements?
+      node *declarations;
+      node * statements;
     } scope;
-    
-    struct {
-      int op;
-      node *right;
-    } unary_expr;
 
     struct {
-      int op;
-      node *left;
-      node *right;
+      
+    } expression;    
+    
+    struct {
+      int op
+      node *right
+    } unary_expr;
+    
+    struct {
+      int op
+      node *left
+      node *right
     } binary_expr;
 
-    // struct {
-    //   // declarations?
-    //   // statements?
-    // } scope;
+
+    struct {
+      int val;
+    } int_node;
+
+    struct {
+      float val;
+    } float_node;
+
+    struct {
+      int is_array;
+      int array_index;
+      char* id;
+    } var_node;
+
+    struct {
+      node* arguments;
+      int* function;
+    } function_node;
+
+    struct {
+      node* type;
+      node* arguments;
+    }constructor_node;
     
-    // struct {
-    //   int op;
-    //   node *right;
-    // } unary_expr;
+    struct {
+      int length;
+      int token_type;
+    }type_node;
+
+    struct {
+      int value;
+    }bool_node;
+
+    struct {
+      //strictly for assignment
+      node* variable;
+      node* expression;
+    }statement_node;
+
+    struct {
+      node* statements;
+      node* statement;
+    }statements_node;
+
+    struct {
+      node* arguments;
+      node* expression;
+    }arguments_node;
+
+    struct {
+      node* var;
+    }expression_var_node;
+
+    struct {
+      node* expression;
+    }nested_expression_node;
+
+    struct {
+      node* expression;
+      node* statement;
+      node* else_statement;
+    }if_statement_node;
+
+    struct {
+      node* scope;
+    }nested_scope_node;
+
+    struct {
+      node* declarations;
+      node* declaration;
+    }declarations_node;
+    
+    struct {
+      int is_const;
+      node* type;
+      char* id;
+      node* expression;
+    }declaration_node;
+
+
 
     // struct {
     //   int op;
