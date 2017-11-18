@@ -64,14 +64,14 @@ struct node_ {
     } expression;    
     
     struct {
-      int op
-      node *right
+      int op;
+      node *right;
     } unary_expr;
     
     struct {
       int op
-      node *left
-      node *right
+      node *left;
+      node *right;
     } binary_expr;
 
 

@@ -25,8 +25,8 @@ node *ast_allocate(node_kind kind, ...) {
   switch(kind) {
   
   case SCOPE_NODE:
-    ast->declarations = va_arg(args, node*);
-    ast->statements = va_arg(args,node*);
+    ast->scope.declarations = va_arg(args, node*);
+    ast->scope.statements = va_arg(args,node*);
     break;
   case EXPRESSION_NODE:
     break;
