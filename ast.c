@@ -114,5 +114,5 @@ void ast_free(node *ast) {
 }
 
 void ast_print(node * ast) {
-
+  printf("Hello world from the print function");
 }
