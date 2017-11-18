@@ -165,8 +165,6 @@ void ast_print(node * ast) {
       break;
     default: 
     break;
-
-
 }
 
 void print_node_type(node* ast) {
