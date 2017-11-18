@@ -134,12 +134,12 @@ void ast_print(node * ast) {
       //do nothing
       break;
     case UNARY_EXPRESION_NODE:
-      printf("UNARY_OP[%d]", ast->unary_expr.op)
+      printf("UNARY_OP[%d]", ast->unary_expr.op);
       ast_print(ast->unary_expr.right);
       break;
     case BINARY_EXPRESSION_NODE:
       ast_print(ast->binary_expr.left);
-      printf("BINARY_OP[%d]\n", ast->binary_expr.op)
+      printf("BINARY_OP[%d]\n", ast->binary_expr.op);
       ast_print(ast->binary_expr.right);
       break;
     case INT_NODE:
@@ -151,7 +151,7 @@ void ast_print(node * ast) {
     case VAR_NODE:
       printf("VAR_isArray[%d]\n", ast->var_node.is_array);
       printf("VAR_array_index[%d]\n", ast->var_node.array_index);
-      printf("VAR_id: [%s]\n" ast->var_node.id);
+      printf("VAR_id: [%s]\n", ast->var_node.id);
       break;
     case FUNCTION_NODE:
       printf("FUNCTION_NAME[%d]\n", ast->function_node.function);
@@ -166,7 +166,7 @@ void ast_print(node * ast) {
       printf("TYPE_LENGTH[%d]\n", ast->type_node.token_type);
       break;
     case BOOL_NODE:
-      if (ast-bool_node.value != 0) {
+      if (ast->bool_node.value != 0) {
         printf("BOOL_NODE[TRUE]\n");
       } else {
         printf("BOOL_NODE[FALSE]\n");
@@ -203,9 +203,9 @@ void ast_print(node * ast) {
       ast_print(ast->declarations_node.declaration);
       break;
     case DECLARATION_NODE:
-      printf("DECLARATION_ISCONST[%d]\n", ast->declaration_node.is_const) //isconst
+      printf("DECLARATION_ISCONST[%d]\n", ast->declaration_node.is_const); //isconst
       ast_print(ast->declaration_node.type);
-      printf("DECLARATION_NAME[%s]", ast->declaration_node.id) //id
+      printf("DECLARATION_NAME[%s]", ast->declaration_node.id); //id
       ast_print(ast->declaration_node.expression);
       break;
     default: 
