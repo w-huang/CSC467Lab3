@@ -133,8 +133,8 @@ struct node_ {
     }nested_expression_node;
 
     struct {
-      node* expression;
-      node* statement;
+      node* condition;
+      node* bodyStatement;
       node* else_statement;
     }if_statement_node;
 
