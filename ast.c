@@ -114,5 +114,127 @@ void ast_free(node *ast) {
 }
 
 void ast_print(node * ast) {
-  printf("Hello world from the print function");
+  printf("Hello world from the print function\n");
+  node_kind kind = ast->kind; //important metadata
+  //printing is pre-order: print self first
+  print_node_type(ast);
+
+  //print children. Depends on what type of node it is
+  switch(kind) {
+    case SCOPE_NODE:
+      ast_print(node->scope.declarations);
+      ast_print(node->scope.statements);
+      break;
+    case EXPRESSION_NODE:
+      break;
+    case UNARY_EXPRESION_NODE:
+      break;
+    case BINARY_EXPRESSION_NODE:
+      break;
+    case INT_NODE:
+      break;
+    case FLOAT_NODE:
+      break;
+    case VAR_NODE:
+      break;
+    case FUNCTION_NODE:
+      break;
+    case CONSTRUCTOR_NODE:
+      break;
+    case TYPE_NODE:
+      break;
+    case BOOL_NODE:
+      break;
+    case STATEMENT_NODE:
+      break;
+    case STATEMENTS_NODE:
+      break;
+    case ARGUMENTS_NODE:
+      break;
+    case EXPRESSION_VAR:
+      break;
+    case NESTED_EXPRESSION_NODE:
+      break;
+    case IF_STATEMENT_NODE:
+      break;
+    case NESTED_SCOPE_NODE:
+      break;
+    case DECLARATIONS_NODE:
+      break;
+    case DECLARATION_NODE:
+      break;
+    default: 
+    break;
+
+
+}
+
+void print_node_type(node* ast) {
+  node_kind kind = ast->kind;
+  switch(kind) {
+    case SCOPE_NODE:
+      printf("SCOPE\n");
+      break;
+    case EXPRESSION_NODE:
+      printf("EXPRESSION\n");
+      break;
+    case UNARY_EXPRESION_NODE:
+      printf("UNARY_EXPRESSION\n");
+      break;
+    case BINARY_EXPRESSION_NODE:
+      printf("BINARY_EXPRESSION\n");
+      break;
+    case INT_NODE:
+      printf("INT\n");
+      break;
+    case FLOAT_NODE:
+      printf("FLOAT\n");
+      break;
+    case VAR_NODE:
+      printf("VAR\n");
+      break;
+    case FUNCTION_NODE:
+      printf("FUNCTION\n");
+      break;
+    case CONSTRUCTOR_NODE:
+      printf("CONSTRUCTOR\n");
+      break;
+    case TYPE_NODE:
+      printf("TYPE\n");
+      break;
+    case BOOL_NODE:
+      printf("BOOL\n");
+      break;
+    case STATEMENT_NODE:
+      printf("STATEMENT\n");
+      break;
+    case STATEMENTS_NODE:
+      printf("STATEMENTS\n");
+      break;
+    case ARGUMENTS_NODE:
+      printf("ARGUMENTS\n");
+      break;
+    case EXPRESSION_VAR:
+      printf("EXPRESSION-VARIABLE\n");
+      break;
+    case NESTED_EXPRESSION_NODE:
+      printf("NESTED_EXPRESSION\n");
+      break;
+    case IF_STATEMENT_NODE:
+      printf("IF_STATEMENT\n");
+      break;
+    case NESTED_SCOPE_NODE:
+      printf("NESTED_SCOPE\n");
+      break;
+    case DECLARATIONS_NODE:
+      printf("DECLARATIONS\n");
+      break;
+    case DECLARATION_NODE:
+      printf("DECLARATION\n");
+      break;
+    default: 
+      printf("UNCAUGHT NODE TYPE: ");
+      printf("%d\n", kind);
+    break;
+    }
 }
