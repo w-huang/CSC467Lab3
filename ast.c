@@ -511,6 +511,6 @@ void dumpVariablesPost(node* ast) {
 }
 
 void dumpVariables(node* ast) {
-  printf("inside dumpVariables");
+  printf("inside dumpVariables\n");
   ast_traverse(ast, &dumpVariablesPre, &dumpVariablesPost);
 }
