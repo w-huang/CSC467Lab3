@@ -3,10 +3,7 @@
 
 #endif
 
-struct symbolEntry;
-typedef struct symbolEntry symbol;
-
-symbolEntry{
+struct symbolEntry{
     int type;
     int intValue;
     float floatValue;
@@ -16,6 +13,8 @@ symbolEntry{
     float vec[4];
     int length; //1 means it's not a vec
 };
+typedef struct symbolEntry symbol;
+
 
 int scopeContainsVariable(char* id);
 void addVariable(char* id);
