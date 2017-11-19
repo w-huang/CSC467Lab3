@@ -198,7 +198,7 @@ void ast_print(node * ast) {
     return;
   }
   node_kind kind = ast->kind; //important metadata
-  if(kind != DECLARATIONS_NODE || declarationsPrinted == 0)
+  if(kind != DECLARATIONS_NODE || declarationsPrinted++ == 0)
     printf("(");
   //printing is pre-order: print self first
   print_node_type(ast);
