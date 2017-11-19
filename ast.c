@@ -496,7 +496,7 @@ void print_node_type(node* ast) {
 
 void dumpVariablesPre(node* ast) {
   if (ast->kind == VAR_NODE) {
-    printf("-------------\n")
+    printf("-------------\n");
     printf("VAR_id: [%s]\n", ast->var_node.id);
     printf("VAR_isArray[%d]\n", ast->var_node.is_array);
     printf("VAR_array_index[%d]\n", ast->var_node.array_index);
