@@ -27,10 +27,6 @@
 #define WITHOUT_ELSE 280
 #define WITH_ELSE 281
 
-int semantic_check( node *ast) {
-  int result = ast_traverse(ast, &checkEnterScope, &checkSemanticsAndExitScope);
-  return result;
-}
 
 void* checkEnterScope(node* ast){
   if (ast->kind == SCOPE_NODE) {
@@ -100,9 +96,9 @@ int getTypeFromExpression(node* ast) {
       }
       break;
     case FUNCTION_NODE:
+      int argType = getTypeFromExpression(ast->function_node.arguments->arguments_node.expression);
       switch(ast->function_node.function) {
         case 0: //dp3
-          int argType = getTypeFromExpression(ast->function_node.arguments->arguments_node.expression);
           if (argType == VEC_T) {
             return FLOAT_T;
           } else if (argType = IVEC_T) {
@@ -222,4 +218,10 @@ void* checkSemanticsAndExitScope(node* ast) {
     default: 
     break;
   }
+}
+
+
+int semantic_check( node *ast) {
+  int result = ast_traverse(ast, &checkEnterScope, &checkSemanticsAndExitScope);
+  return result;
 }
