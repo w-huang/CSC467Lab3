@@ -6,7 +6,7 @@
 struct symbolEntry;
 typedef struct symbolEntry symbol;
 
-struct symbolEntry{
+symbolEntry{
     int type;
     int intValue;
     float floatValue;
