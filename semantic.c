@@ -147,7 +147,8 @@ int getTypeFromExpression(node* ast) {
 
 void* checkSemanticsAndExitScope(node* ast) {
   node_kind kind = ast->kind;
-
+  int opKind;
+  int type;
   switch (kind) {
     case SCOPE_NODE:
       //this is the post-order call - we are now exiting a scope
@@ -163,8 +164,8 @@ void* checkSemanticsAndExitScope(node* ast) {
       3) Logical: !
       */
 
-      int opKind = ast->unary_expr.op;
-      int type = getTypeFromExpression(ast->unary_expr.right);      
+      opKind = ast->unary_expr.op;
+      type = getTypeFromExpression(ast->unary_expr.right);      
       if (opKind == '-') {
         //confirm right side is arithmatic value
         if (type == BOOL_T || type == BVEC_T) {
