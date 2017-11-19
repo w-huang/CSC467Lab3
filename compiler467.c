@@ -90,7 +90,7 @@ int main (int argc, char *argv[]) {
 /* Phase 3: Call the AST dumping routine if requested */
   //tag_scopes(ast);
   //build_symbol_table(ast);
-  //dumpVariables(ast);
+  dumpVariables(ast);
 
   if (dumpAST)
     ast_print(ast);

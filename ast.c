@@ -511,5 +511,5 @@ void dumpVariablesPost(node* ast) {
 }
 
 void dumpVariables(node* ast) {
-  ast_traverse(ast, dumpVariablesPre, dumpVariablesPost);
+  ast_traverse(ast, &dumpVariablesPre, &dumpVariablesPost);
 }
