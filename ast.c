@@ -189,6 +189,8 @@ void ast_free(node *ast) {
     return;
 }
 
+int declarationsPrinted = 0;
+
 void ast_print(node * ast) {
   if (ast == NULL) {
     //leaf node
@@ -196,8 +198,8 @@ void ast_print(node * ast) {
     return;
   }
   node_kind kind = ast->kind; //important metadata
-
-  printf("(");
+  if(node_kind != DECLARATIONS_NODE || declarationsPrinted == 0)
+    printf("(");
   //printing is pre-order: print self first
   print_node_type(ast);
 
@@ -285,8 +287,8 @@ void ast_print(node * ast) {
     default: 
     break;
   }
-
-  printf(")");
+  if(node_kind != DECLARATIONS_NODE || declarationsPrinted == 0)  
+    printf(")");
 
 }
 
