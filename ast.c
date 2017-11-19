@@ -349,7 +349,10 @@ void ast_print(node * ast) {
 }
 
 void ast_traverse(node* ast, void (*pre)(node*), void (*post)(node*)) {
-  printf("ast_traversal\n");
+  if (ast == NULL) {
+    return;
+  }
+  //printf("ast_traversal\n");
   if (pre != NULL) {
     pre(ast);
   }
@@ -511,6 +514,6 @@ void dumpVariablesPost(node* ast) {
 }
 
 void dumpVariables(node* ast) {
-  printf("inside dumpVariables\n");
+  //printf("inside dumpVariables\n");
   ast_traverse(ast, &dumpVariablesPre, &dumpVariablesPost);
 }
