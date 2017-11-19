@@ -160,5 +160,7 @@ node *ast_allocate(node_kind type, ...);
 void ast_free(node *ast);
 void ast_print(node * ast);
 void print_node_type(node* ast);
+void ast_traverse(node* ast, void (*pre)(node*), void (*post) (node*));
+void dumpVariables(node* ast);
 
 #endif /* AST_H_ */

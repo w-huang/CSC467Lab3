@@ -12,6 +12,29 @@
 //hello
 node *ast = NULL;
 
+void print_type(node* ast) {
+  if (ast->kind != TYPE_NODE) {
+    printf("shouldn't be here - print_type");
+    return;
+  }
+
+  int tokenType = ast->type_node.token_type;
+  switch(token_type) {
+    case 258:
+      printf(" FLOAT ");
+      break;
+    case 259:
+      printf(" INT ");
+      break;
+    case 260:
+      printf(" BOOL ");
+      break;
+    case 264:
+      printf(" FUNC ");
+      break;
+  }
+}
+
 node *ast_allocate(node_kind kind, ...) {
   va_list args;
 
@@ -293,9 +316,14 @@ void ast_print(node * ast) {
       ast_print(ast->declarations_node.declaration);
       break;
     case DECLARATION_NODE:
-      printf("DECLARATION_ISCONST[%d]\n", ast->declaration_node.is_const); //isconst
-      ast_print(ast->declaration_node.type);
-      printf("DECLARATION_NAME[%s]\n", ast->declaration_node.id); //id
+      //don't need to print whether it's const or not
+      //printf("DECLARATION_ISCONST[%d]\n", ast->declaration_node.is_const); //isconst
+      
+      //don't need type node - just the type 
+      //ast_print(ast->declaration_node.type);
+      
+      print_type(ast->declaration_node.type);
+      printf(" %s ", ast->declaration_node.id); //id
       ast_print(ast->declaration_node.expression);
       break;
     default: 
@@ -320,6 +348,87 @@ void ast_print(node * ast) {
     printf("========ERROR========");
   }
 }
+
+void ast_traverse(node* ast, void (*pre)(node*), void (*post)(node*)) {
+  if (pre != NULL) {
+    pre(ast, pre, post);
+  }
+
+  node_kind kind = ast->kind;
+
+  switch(kind) {
+    case SCOPE_NODE:
+    ast_traverse(ast->scope.declarations, pre, post);
+    ast_traverse(ast->scope.statements, pre, post);
+    break;
+  case UNARY_EXPRESION_NODE:
+    ast_traverse(ast->unary_expr.right, pre, post);
+    break;
+  case BINARY_EXPRESSION_NODE:
+    ast_traverse(ast->binary_expr.left, pre, post);
+    ast_traverse(ast->binary_expr.right, pre, post);
+    break;
+  case INT_NODE:
+    break;
+  case FLOAT_NODE:
+    break;
+  case VAR_NODE:
+    //no children
+    break;
+  case FUNCTION_NODE:
+    ast_traverse(ast->function_node.arguments, pre, post);
+    break;
+  case CONSTRUCTOR_NODE:
+    ast_traverse(ast->constructor_node.type, pre, post);
+    ast_traverse(ast->constructor_node.arguments, pre, post);
+    break;
+  case TYPE_NODE:
+    break;
+  case BOOL_NODE:
+    break;
+  case STATEMENT_NODE:
+    ast_traverse(ast->statement_node.variable, pre, post);
+    ast_traverse(ast->statement_node.expression, pre, post);
+    break;
+  case STATEMENTS_NODE:
+    ast_traverse(ast->statements_node.statements, pre, post);
+    ast_traverse(ast->statements_node.statement, pre, post);
+    break;
+  case ARGUMENTS_NODE:
+    ast_traverse(ast->arguments_node.arguments, pre, post);
+    ast_traverse(ast->arguments_node.expression, pre, post);
+    break;
+  case EXPRESSION_VAR:
+    ast_traverse(ast->expression_var_node.var, pre, post);
+    break;
+  case NESTED_EXPRESSION_NODE:
+    ast_traverse(ast->nested_expression_node.expression, pre, post);
+    break;
+  case IF_STATEMENT_NODE:
+    ast_traverse(ast->if_statement_node.condition, pre, post);
+    ast_traverse(ast->if_statement_node.bodyStatement, pre, post);
+    ast_traverse(ast->if_statement_node.else_statement, pre, post);
+    break;
+  case NESTED_SCOPE_NODE:
+    ast_traverse(ast->nested_scope_node.scope, pre, post);
+    break;
+  case DECLARATIONS_NODE:
+    ast_traverse(ast->declarations_node.declarations, pre, post);
+    ast_traverse(ast->declarations_node.declaration, pre, post);
+    break;
+  case DECLARATION_NODE:
+    ast_traverse(ast->declaration_node.type, pre, post);
+    ast_traverse(ast->declaration_node.expression, pre, post);
+    break;
+  default: 
+  break;
+  }
+  if (post != NULL) {
+    post(ast);
+  }
+}
+
+void build_symbol_table()
 
 void print_node_type(node* ast) {
   node_kind kind = ast->kind;
@@ -355,7 +464,7 @@ void print_node_type(node* ast) {
       printf("BOOL\n");
       break;
     case STATEMENT_NODE:
-      printf("STATEMENT\n");
+      printf("ASSIGN\n");
       break;
     case STATEMENTS_NODE:
       printf("STATEMENTS\n");
@@ -386,4 +495,8 @@ void print_node_type(node* ast) {
       printf("%d\n", kind);
     break;
     }
+}
+
+void dumpVariables(node* ast) {
+  printf("dump variables");
 }
