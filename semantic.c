@@ -28,7 +28,7 @@
 #define WITH_ELSE 281
 
 
-void* checkEnterScope(node* ast){
+void checkEnterScope(node* ast){
   if (ast->kind == SCOPE_NODE) {
     enterNewScope();
   }
@@ -141,7 +141,7 @@ int getTypeFromExpression(node* ast) {
 
 
 
-void* checkSemanticsAndExitScope(node* ast) {
+void checkSemanticsAndExitScope(node* ast) {
   node_kind kind = ast->kind;
   int opKind;
   int type;
