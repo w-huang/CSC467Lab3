@@ -197,6 +197,7 @@ void ast_print(node * ast) {
   }
   node_kind kind = ast->kind; //important metadata
 
+  print("(");
   //printing is pre-order: print self first
   print_node_type(ast);
 
@@ -285,6 +286,7 @@ void ast_print(node * ast) {
     break;
   }
 
+  print(")");
 
 }
 
