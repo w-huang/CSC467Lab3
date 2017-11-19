@@ -14,8 +14,10 @@ void enterNewScope() {
 
 }
 
-void getVariableDetails(char* id){
-
+symbol getVariableDetails(char* id){
+    symbol x;
+    memset(&x, 0, sizeof(symbol));
+    return x;
 }
 
 void exitScope(){
