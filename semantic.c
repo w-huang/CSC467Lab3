@@ -2,6 +2,31 @@
 #include "semantic.h"
 #include <stdio.h>
 
+#define FLOAT_T 258
+#define INT_T 259
+#define BOOL_T 260
+#define CONST 261
+#define FALSE_C 262
+#define TRUE_C 263
+#define FUNC 264
+#define IF 265
+#define ELSE 266
+#define AND 267
+#define OR 268
+#define NEQ 269
+#define EQ 270
+#define LEQ 271
+#define GEQ 272
+#define VEC_T 273
+#define BVEC_T 274
+#define IVEC_T 275
+#define FLOAT_C 276
+#define INT_C 277
+#define ID 278
+#define UMINUS 279
+#define WITHOUT_ELSE 280
+#define WITH_ELSE 281
+
 int semantic_check( node *ast) {
   int result = ast_traverse(ast, &checkEnterScope, &checkSemanticsAndExitScope);
   return result;
@@ -16,7 +41,7 @@ void* checkEnterScope(node* ast){
 int binaryOpMatchesBoolean(int op) {
   if (
       (op == AND) || 
-      (op ==OR)   || 
+      (op == OR)   || 
       (op == GEQ) ||
       (op == LEQ) ||
       (op == '<') ||
