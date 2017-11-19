@@ -3,3 +3,8 @@
 
 #endif
 
+int scopeContainsVariable(char* id);
+void addVariable(char* id);
+void enterNewScope();
+void getVariableDetails(char* id);
+void exitScope();
