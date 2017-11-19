@@ -101,7 +101,7 @@ int getTypeFromExpression(node* ast) {
       break;
     case FUNCTION_NODE:
       switch(ast->function_node.function) {
-        case DP3:
+        case 0: //dp3
           int argType = getTypeFromExpression(ast->function_node.arguments->arguments_node.expression);
           if (argType == VEC_T) {
             return FLOAT_T;
@@ -109,10 +109,10 @@ int getTypeFromExpression(node* ast) {
             return INT_T;
           }
           break;
-        case LIT: 
+        case 1: //LIT
           return VEC_T;
           break;
-        case RSQ:
+        case 2: //RSQ
           return FLOAT_T;
           break;
       }
@@ -174,7 +174,7 @@ void* checkSemanticsAndExitScope(node* ast) {
       } else if (opKind == '!')
       {
         if (type != BOOL_T && type != BVEC_T) {
-          printf("Semantic error: Expecting boolean operand but got type %s,"
+          printf("Semantic error: Expecting boolean operand but got type %s,",
           typeCodeToString(type));
         }
       } else {
