@@ -51,7 +51,8 @@ struct node_ {
 
   // an example of tagging each node with a type
   node_kind kind;
-
+  node* scope;
+  
   union {
     struct {
       node *declarations;

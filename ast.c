@@ -130,7 +130,6 @@ node *ast_allocate(node_kind kind, ...) {
 }
 
 void ast_free(node *ast) {
-
     if (ast == NULL) {
       //leaf NULL node, do nothing;
       return;
@@ -495,6 +494,21 @@ void print_node_type(node* ast) {
     }
 }
 
+void dumpVariablesPre(node* ast) {
+  if (ast->kind == VAR_NODE) {
+    printf("-------------\n")
+    printf("VAR_id: [%s]\n", ast->var_node.id);
+    printf("VAR_isArray[%d]\n", ast->var_node.is_array);
+    printf("VAR_array_index[%d]\n", ast->var_node.array_index);
+    //dump
+  }
+  //else do nothing
+}
+
+void dumpVariablesPost(node* ast) {
+  //nothing to do
+}
+
 void dumpVariables(node* ast) {
-  printf("dump variables");
+  ast_traverse(ast, dumpVariablesPre, dumpVariablesPost);
 }
