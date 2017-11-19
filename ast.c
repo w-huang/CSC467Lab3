@@ -191,6 +191,7 @@ void ast_free(node *ast) {
 
 int declarationsPrinted = 0;
 int statementsPrinted = 0;
+
 void ast_print(node * ast) {
   if (ast == NULL) {
     //leaf node
@@ -199,12 +200,21 @@ void ast_print(node * ast) {
   }
   node_kind kind = ast->kind; //important metadata
   //only print "declarations" and "statements" once
-  if((kind != DECLARATIONS_NODE || declarationsPrinted++ == 0) || 
-     (kind != STATEMENTS_NODE || statementsPrinted++ == 0)
-    ){
+  if (kind == DECLARATIONS_NODE) {
+    if (declarationsPrinted == 0) {
       printf("(");
-      //printing is pre-order: print self first    
-      print_node_type(ast);    
+      print_node_type(ast);
+      ++declarationsPrinted;
+    }
+  } else if (kind == STATEMENTS_NODE) {
+    if (statementsPrinted == 0) {
+      printf("(");
+      print_node_type(ast);
+      ++statementsPrinted;
+    }
+  } else {
+    printf("(");
+    print_node_type(ast);
   }
 
   //print children. Depends on what type of node it is
@@ -291,10 +301,24 @@ void ast_print(node * ast) {
     default: 
     break;
   }
-  
-  if( (kind != DECLARATIONS_NODE || declarationsPrinted++ == 1) || 
-      (kind != STATEMENTS_NODE || statementsPrinted++ == 1)
-    ) printf(")");
+  //close brackets off
+  if (kind == DECLARATIONS_NODE) {
+    if (declarationsPrinted == 0) {
+      printf(")");
+      ++declarationsPrinted;
+    }
+  } else if (kind == STATEMENTS_NODE) {
+    if (statementsPrinted == 0) {
+      printf(")");
+      ++statementsPrinted;
+    }
+  } else {
+    printf(")");
+  }
+
+  if (statementsPrinted > 2 || declarationsPrinted > 2) {
+    printf("========ERROR========");
+  }
 }
 
 void print_node_type(node* ast) {
