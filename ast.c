@@ -349,6 +349,7 @@ void ast_print(node * ast) {
 }
 
 void ast_traverse(node* ast, void (*pre)(node*), void (*post)(node*)) {
+  printf("ast_traversal");
   if (pre != NULL) {
     pre(ast);
   }
