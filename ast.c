@@ -19,7 +19,7 @@ void print_type(node* ast) {
   }
 
   int tokenType = ast->type_node.token_type;
-  switch(token_type) {
+  switch(tokenType) {
     case 258:
       printf(" FLOAT ");
       break;
@@ -351,7 +351,7 @@ void ast_print(node * ast) {
 
 void ast_traverse(node* ast, void (*pre)(node*), void (*post)(node*)) {
   if (pre != NULL) {
-    pre(ast, pre, post);
+    pre(ast);
   }
 
   node_kind kind = ast->kind;
@@ -427,8 +427,6 @@ void ast_traverse(node* ast, void (*pre)(node*), void (*post)(node*)) {
     post(ast);
   }
 }
-
-void build_symbol_table()
 
 void print_node_type(node* ast) {
   node_kind kind = ast->kind;
