@@ -132,7 +132,7 @@ int getTypeFromExpression(node* ast) {
       return getTypeFromExpression(ast->expression_var_node.var);
       }break;
     case VAR_NODE: {
-      return getVariableDetails(ast->var_node.id);
+      return getVariableDetails(ast->var_node.id).type;
     }
     default: {
       //error 
