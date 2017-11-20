@@ -91,8 +91,7 @@ int main (int argc, char *argv[]) {
   //tag_scopes(ast);
   //build_symbol_table(ast);
   //printf("about to call dumpVariables\n");
-  dumpVariables(ast);
-
+  semantic_check(ast);
   if (dumpAST)
     ast_print(ast);
 /* Phase 4: Add code to call the code generation routine */
