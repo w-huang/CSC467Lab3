@@ -126,10 +126,10 @@ int getTypeFromExpression(node* ast) {
       return FLOAT_T;
       }break;
     case NESTED_EXPRESSION_NODE: {
-      return getTypeFromExpression(ast->nested_expression_node.expression)
+      return getTypeFromExpression(ast->nested_expression_node.expression);
       }break;
     case EXPRESSION_VAR: {
-      return getVariableDetails(ast->expression_var_node.id).type;
+      return getVariableDetails(ast->expression_var_node.var);
       }break;
     default: {
       //error 
@@ -222,6 +222,7 @@ void checkSemanticsAndExitScope(node* ast) {
 
 
 int semantic_check( node *ast) {
-  int result = ast_traverse(ast, &checkEnterScope, &checkSemanticsAndExitScope);
+  ast_traverse(ast, &checkEnterScope, &checkSemanticsAndExitScope);
+  int result =1 ;
   return result;
 }
