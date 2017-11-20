@@ -58,7 +58,7 @@ char* typeCodeToString(int type) {
       return "INT";
       break;
     case FLOAT_T:
-      return "FLOAT"
+      return "FLOAT";
       break;
     case VEC_T:
       return "VEC";
@@ -129,8 +129,11 @@ int getTypeFromExpression(node* ast) {
       return getTypeFromExpression(ast->nested_expression_node.expression);
       }break;
     case EXPRESSION_VAR: {
-      return getVariableDetails(ast->expression_var_node.var);
+      return getTypeFromExpression(ast->expression_var_node.var);
       }break;
+    case VAR_NODE: {
+      return getVariableDetails(ast->var_node.id);
+    }
     default: {
       //error 
       printf("error in getting type");
