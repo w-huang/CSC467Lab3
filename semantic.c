@@ -80,62 +80,62 @@ char* typeCodeToString(int type) {
 int getTypeFromExpression(node* ast) {
   node_kind kind = ast->kind;
   switch(kind) {
-    case BINARY_EXPRESSION_NODE:
+    case BINARY_EXPRESSION_NODE: {
       if (binaryOpMatchesBoolean(ast->binary_expr.op)) {
         return BOOL_T;
       } else {
         //recurse on inner expression - arithmatic ops have same type as operands
         return getTypeFromExpression(ast->binary_expr.left);
       }
-      break;
-    case UNARY_EXPRESION_NODE:
+      }break;
+    case UNARY_EXPRESION_NODE: {
       if (ast->unary_expr.op == '!') {
         return BOOL_T;
       } else {
         return getTypeFromExpression(ast->unary_expr.right);
       }
-      break;
-    case FUNCTION_NODE:
+      }break;
+    case FUNCTION_NODE: {
       int argType = getTypeFromExpression(ast->function_node.arguments->arguments_node.expression);
       switch(ast->function_node.function) {
-        case 0: //dp3
+        case 0: { //dp3
           if (argType == VEC_T) {
             return FLOAT_T;
           } else if (argType = IVEC_T) {
             return INT_T;
           }
-          break;
-        case 1: //LIT
+          }break;
+        case 1: { //LIT
           return VEC_T;
-          break;
-        case 2: //RSQ
+          }break;
+        case 2: { //RSQ
           return FLOAT_T;
-          break;
+          }break;
       }
-      break;
-    case CONSTRUCTOR_NODE:
+      }break;
+    case CONSTRUCTOR_NODE: {
       return ast->constructor_node.type->type_node.token_type;
-      break;
-    case BOOL_NODE:
+      }break;
+    case BOOL_NODE: {
       return BOOL_T;
-      break;
-    case INT_NODE:
+      }break;
+    case INT_NODE: {
       return INT_T;
-      break;
-    case FLOAT_NODE:
+      }break;
+    case FLOAT_NODE: {
       return FLOAT_T;
-      break;
-    case NESTED_EXPRESSION_NODE:
+      }break;
+    case NESTED_EXPRESSION_NODE: {
       return getTypeFromExpression(ast->nested_expression_node.expression)
-      break;
-    case EXPRESSION_VAR:
+      }break;
+    case EXPRESSION_VAR: {
       return getVariableDetails(ast->expression_var_node.id).type;
-      break;
-    default:
+      }break;
+    default: {
       //error 
       printf("error in getting type");
       return -1;
-      break;
+      }break;
   }
 }
 
