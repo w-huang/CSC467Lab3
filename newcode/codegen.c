@@ -243,7 +243,8 @@ int genCode(node* ast) {
             }
             break;
             
-        case ASSIGNMENT_STATEMENT_NODE:
+		case ASSIGNMENT_STATEMENT_NODE:
+			//TODO: modify for if-stmt logic
         	if (!is_expression(ast->assignment_statement.right->kind)) {
 	          	printf("MOV ");
 	          	genCode(ast->assignment_statement.left);
@@ -261,14 +262,13 @@ int genCode(node* ast) {
             
         case IF_ELSE_STATEMENT_NODE:{
 			condVarCount++;
-			
 			printf("TEMP condVar%d;\n", condVarCount);
 			
-			int cond_index = genCode(ast->if_statement.condition);
+			int cond_index = genCode(ast->if_else_statement.condition);
 			printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
 
 
-			int then_expr_index = genCode(ast->if_statement.then_expression);
+			int then_expr_index = genCode(ast->if_else_statement.then_expression);
 			tempVar_count++;
 			printf("CMP tempVar%d, condVar%d, tempVar%d, tempVar%d;\n", 
 				tempVar_count, 
@@ -284,15 +284,32 @@ int genCode(node* ast) {
 		}
 		case IF_STATEMENT_NODE:{
 			condVarCount++;
-			
 			printf("TEMP condVar%d;\n", condVarCount);
-			
-			int cond_index = genCode(ast->if_statement.condition);
-			printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
+			//prepare condition variable
+			if (ast->if_statement.condition->kind == UNARY_EXPRESSION_NODE 	||
+				ast->if_statement.condition->kind == BINARY_EXPRESSION_NODE ||
+				ast->if_statement.condition->kind == FUNCTION_NODE) 
+			{
+					//need to put result into a temp first
+				int cond_index = genCode(ast->if_statement.condition);
+				printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
+			}
+			else 
+			{
+				//genCode will print a number, prepare with print statements
+				printf("MOV condVar%d, ", condVarCount);
+				genCode(ast->if_statement.condition);
+				printf(";\n");
+			}
+
+			//TODO:push conditions onto the conditionStack
+
 
 
 			int then_expr_index = genCode(ast->if_statement.then_expression);
 			tempVar_count++;
+			
+			//this belongs in the assignment node
 			printf("CMP tempVar%d, condVar%d, tempVar%d, tempVar%d;\n", 
 				tempVar_count, 
 				condVarCount, 
