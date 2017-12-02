@@ -273,7 +273,7 @@ int genCode(node* ast) {
 			printf("TEMP condVar%d;\n", condVarCount);
 			
 			int cond_index = genCode(ast->if_statement.condition);
-			printf("MOV condVar%d, tempVar%d;\n", condVarCount, exp_index);
+			printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
 
 
 			int then_expr_index = genCode(ast->if_statement.then_expression);
