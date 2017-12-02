@@ -267,7 +267,7 @@ int genCode(node* ast) {
 
             break;
             
-		case IF_STATEMENT_NODE:
+		case IF_STATEMENT_NODE:{
 			condVarCount++;
 			
 			printf("TEMP condVar%d;\n", condVarCount);
@@ -289,7 +289,7 @@ int genCode(node* ast) {
 			condVarCount--;
 			return tempVar_count;
             break;
-            
+		}
         case STATEMENT_SCOPE_NODE:
             //genCode(ast->statement_scope.scope);
             break;
