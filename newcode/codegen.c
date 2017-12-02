@@ -278,7 +278,7 @@ int genCode(node* ast) {
 
 			int then_expr_index = genCode(ast->if_statement.then_expression);
 			tempVar_count++;
-			print("CMP tempVar%d, condVar%d, tempVar%d, tempVar%d;\n", 
+			printf("CMP tempVar%d, condVar%d, tempVar%d, tempVar%d;\n", 
 				tempVar_count, 
 				condVarCount, 
 				then_expr_index,
