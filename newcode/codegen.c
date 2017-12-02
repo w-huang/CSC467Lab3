@@ -443,7 +443,7 @@ int genCode(node* ast) {
         		num_parameters--;
         		printf(",");
         	}
-            return VAR; 
+            break; 
             
         case INDEXING_NODE: 
             check_predef_and_print(ast->array_indexing.identifier,ast->array_indexing.index);
