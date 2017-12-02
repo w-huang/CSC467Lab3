@@ -305,7 +305,7 @@ int genCode(node* ast) {
 			//TODO:push conditions onto the conditionStack
 
 
-			printf("#Calling gencode on then_expression\n")
+			printf("#Calling gencode on then_expression\n");
 			int then_expr_index = genCode(ast->if_statement.then_expression);
 			tempVar_count++;
 			printf("TEMP tempVar%d;\n",tempVar_count);
