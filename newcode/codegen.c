@@ -353,23 +353,35 @@ int genCode(node* ast) {
         case IF_ELSE_STATEMENT_NODE:{
 			condVarCount++;
 			printf("TEMP condVar%d;\n", condVarCount);
-			
-			int cond_index = genCode(ast->if_else_statement.condition);
-			printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
+			//prepare condition variable
+			if (ast->if_else_statement.condition->kind == UNARY_EXPRESSION_NODE  ||
+				ast->if_else_statement.condition->kind == BINARY_EXPRESSION_NODE ||
+				ast->if_else_statement.condition->kind == FUNCTION_NODE) 
+			{
+					//need to put result into a temp first
+				int cond_index = genCode(ast->if_else_statement.condition);
+				printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
+			}
+			else 
+			{
+				//genCode will print a number, prepare with print statements
+				printf("MOV condVar%d, ", condVarCount);
+				genCode(ast->if_else_statement.condition);
+				printf(";\n");
+			}
 
-
-			int then_expr_index = genCode(ast->if_else_statement.then_expression);
-			tempVar_count++;
-			printf("CMP tempVar%d, condVar%d, tempVar%d, tempVar%d;\n", 
-				tempVar_count, 
-				condVarCount, 
-				then_expr_index,
-				tempVar_count);
-            //genCode(ast->if_statement.condition);
-			//genCode(ast->if_statement.then_expression);
+			//TODO:push conditions onto the conditionStack
+			//enter THEN BLOCK
+			pushCondition(1);
+			genCode(ast->if_else_statement.then_expression);
+			popCondition();
 			
+			//ELSE block
+			pushCondition(0);
+			genCode(ast->if_else_statement.else_expression);
+			popCondition();
+
 			condVarCount--;
-			return tempVar_count;
             break;
 		}
 		case IF_STATEMENT_NODE:{
