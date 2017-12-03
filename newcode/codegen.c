@@ -16,6 +16,7 @@ int conditionStack[256];
 //lazy stack
 int top = 0;
 int stackInitialized = 0;
+int initializedOriginalValue = 0;
 
 void pushCondition(int ifelse) {
 	if (!stackInitialized) {
@@ -275,13 +276,15 @@ int genCode(node* ast) {
 
 				//preserve the original value in a tempVar for CMP
 				tempVar_count++;
-				printf("TEMP tempVar%d\n", tempVar_count);
-				printf("MOV tempVar%d,", tempVar_count);
-				int original_index = tempVar_count;
+				
+				if (!initializedOriginalValue) {
+					printf("TEMP OriginalValueBubble;\n");
+				}
+				printf("MOV OriginalValueBubble,");
 				genCode(ast->assignment_statement.left);
 				printf(";\n");
 
-				for (int i = top; i > -1; --i) {
+				for (int i = top; i >= 1; --i) {
 					//go from the stack top down
 					switch(conditionStack[i]){
 						case 1: {
@@ -292,15 +295,16 @@ int genCode(node* ast) {
 								int LHS = genCode(ast->assignment_statement.left);
 								printf(", ");
 								printf("condVar%d", i);
-								printf(", tempVar%d, tempVar%d;\n", RHS, original_index);
+								printf(", tempVar%d, OriginalValueBubble;\n", RHS);
 							} else {
 								printf("CMP ");
 								int LHS = genCode(ast->assignment_statement.left);
 								printf(", ");
 								printf("condVar%d, ", i);
 								genCode(ast->assignment_statement.right);
-								printf(", tempVar%d;\n", original_index);
+								printf(", OriginalValueBubble;\n");
 							}
+							break;
 						}
 						case 0: {
 							//ELSE BLOCK
@@ -310,16 +314,17 @@ int genCode(node* ast) {
 								int LHS = genCode(ast->assignment_statement.left);
 								printf(", ");
 								printf("condVar%d", i);
-								printf(", tempVar%d, tempVar%d;\n", original_index, RHS);
+								printf(", OriginalValueBubble, tempVar%d;\n", RHS);
 							} else {
 								printf("CMP ");
 								int LHS = genCode(ast->assignment_statement.left);
 								printf(", ");
 								printf("condVar%d", i);
-								printf(", tempVar%d, ", original_index);
+								printf(", OriginalValueBubble, ");
 								genCode(ast->assignment_statement.right);
 								printf(";\n");
 							}
+							break;
 						}
 
 						default:
