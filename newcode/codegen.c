@@ -275,7 +275,7 @@ int genCode(node* ast) {
 
 				//preserve the original value in a tempVar for CMP
 				tempVar_count++;
-				printf("TEMP tempVar%d\n"tempVar_count);
+				printf("TEMP tempVar%d\n", tempVar_count);
 				printf("MOV tempVar%d,", tempVar_count);
 				int original_index = tempVar_count;
 				genCode(ast->assignment_statement.left);
@@ -286,7 +286,7 @@ int genCode(node* ast) {
 					switch(conditionStack[i]){
 						case 1: {
 							//THEN BLOCK
-							if (is_expression(ast->assignment_statement.right)) {
+							if (is_expression(ast->assignment_statement.right->kind)) {
 								int RHS = genCode(ast->assignment_statement.right);
 								printf("CMP ");
 								int LHS = genCode(ast->assignment_statement.left);
@@ -304,7 +304,7 @@ int genCode(node* ast) {
 						}
 						case 0: {
 							//ELSE BLOCK
-							if (is_expression(ast->assignment_statement.right)) {
+							if (is_expression(ast->assignment_statement.right->kind)) {
 								int RHS = genCode(ast->assignment_statement.right);
 								printf("CMP ");
 								int LHS = genCode(ast->assignment_statement.left);
