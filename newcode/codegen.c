@@ -12,15 +12,19 @@ int tempVar_count = 1;
 int num_parameters = 0;
 int condVarCount = 0;
 
-int[256] conditionStack;
+int conditionStack[256];
 //lazy stack
 int top = 0;
-
-for (int i =0; i < 256; ++i) {
-	conditionStack[i] = -1;
-}
+int stackInitialized = 0;
 
 void pushCondition(int ifelse) {
+	if (!stackInitialized) {
+		for (int i =0; i < 256; ++i) {
+			conditionStack[i] = -1;
+		}
+		stackInitialized = 1;
+	}
+
 	//1 for then
 	//0 for else
 	conditionStack[++top] = ifelse;
