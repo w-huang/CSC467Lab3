@@ -10,8 +10,28 @@
 int current_scope = 0;
 int tempVar_count = 1;
 int num_parameters = 0;
-int condVarCount = 1;
+int condVarCount = 0;
 
+int[256] conditionStack;
+//lazy stack
+int top = 0;
+
+for (int i =0; i < 256; ++i) {
+	conditionStack[i] = -1;
+}
+
+void pushCondition(int ifelse) {
+	//1 for then
+	//0 for else
+	conditionStack[++top] = ifelse;
+	return;
+}
+
+void popCondition() {
+	if (top > 0) 
+		conditionStack[top--] = -1;
+	return;
+}
 
 int is_literal(int kind) {
 	if (kind == INT_NODE || kind == FLOAT_NODE || kind == BOOL_NODE)
@@ -243,8 +263,70 @@ int genCode(node* ast) {
             }
             break;
             
-		case ASSIGNMENT_STATEMENT_NODE:
+		case ASSIGNMENT_STATEMENT_NODE: {
 			//TODO: modify for if-stmt logic
+
+			if(top > 0) {
+				//we are in some then/else blocks
+
+				//preserve the original value in a tempVar for CMP
+				tempVar_count++;
+				printf("TEMP tempVar%d\n"tempVar_count);
+				printf("MOV tempVar%d,", tempVar_count);
+				int original_index = tempVar_count;
+				genCode(ast->assignment_statement.left);
+				printf(";\n");
+
+				for (int i = top; i > -1; --i) {
+					//go from the stack top down
+					switch(conditionStack[i]){
+						case 1: {
+							//THEN BLOCK
+							if (is_expression(ast->assignment_statement.right)) {
+								int RHS = genCode(ast->assignment_statement.right);
+								printf("CMP ");
+								int LHS = genCode(ast->assignment_statement.left);
+								printf(", ");
+								printf("condVar%d", i);
+								printf(", tempVar%d, tempVar%d;\n", RHS, original_index);
+							} else {
+								printf("CMP ");
+								int LHS = genCode(ast->assignment_statement.left);
+								printf(", ");
+								printf("condVar%d, ", i);
+								genCode(ast->assignment_statement.right);
+								printf(", tempVar%d;\n", original_index);
+							}
+						}
+						case 0: {
+							//ELSE BLOCK
+							if (is_expression(ast->assignment_statement.right)) {
+								int RHS = genCode(ast->assignment_statement.right);
+								printf("CMP ");
+								int LHS = genCode(ast->assignment_statement.left);
+								printf(", ");
+								printf("condVar%d", i);
+								printf(", tempVar%d, tempVar%d;\n", original_index, RHS);
+							} else {
+								printf("CMP ");
+								int LHS = genCode(ast->assignment_statement.left);
+								printf(", ");
+								printf("condVar%d", i);
+								printf(", tempVar%d, ", original_index);
+								genCode(ast->assignment_statement.right);
+								printf(";\n");
+							}
+						}
+
+						default:
+							//shouldn't ever happen
+							printf("#big problems with the conditionStack\n");
+							break;
+					}
+				}
+				
+
+			}
         	if (!is_expression(ast->assignment_statement.right->kind)) {
 	          	printf("MOV ");
 	          	genCode(ast->assignment_statement.left);
@@ -259,7 +341,7 @@ int genCode(node* ast) {
             	printf(", tempVar%d;\n",exp_index-1);
             }
             break;
-            
+		} 
         case IF_ELSE_STATEMENT_NODE:{
 			condVarCount++;
 			printf("TEMP condVar%d;\n", condVarCount);
@@ -303,27 +385,15 @@ int genCode(node* ast) {
 			}
 
 			//TODO:push conditions onto the conditionStack
-
-
-			printf("#Calling gencode on then_expression\n");
-			int then_expr_index = genCode(ast->if_statement.then_expression);
-			tempVar_count++;
-			printf("TEMP tempVar%d;\n",tempVar_count);
-			//this belongs in the assignment node
-			printf("CMP tempVar%d, condVar%d, tempVar%d, tempVar%d;\n", 
-				tempVar_count, 
-				condVarCount, 
-				then_expr_index,
-				tempVar_count);
-            //genCode(ast->if_statement.condition);
-			//genCode(ast->if_statement.then_expression);
-			
+			//enter THEN BLOCK
+			pushCondition(1);
+			genCode(ast->if_statement.then_expression);
+			popCondition();
 			condVarCount--;
-			return tempVar_count;
             break;
 		}
-        case STATEMENT_SCOPE_NODE:
-            //genCode(ast->statement_scope.scope);
+		case STATEMENT_SCOPE_NODE:
+            genCode(ast->statement_scope.scope);
             break;
             
         case TYPE_NODE:
