@@ -335,19 +335,21 @@ int genCode(node* ast) {
 				
 
 			}
-        	if (!is_expression(ast->assignment_statement.right->kind)) {
-	          	printf("MOV ");
-	          	genCode(ast->assignment_statement.left);
-	          	printf(", ");
-          		genCode(ast->assignment_statement.right);
-          		printf(";\n");
-            }
-            else {
-            	int exp_index = genCode(ast->assignment_statement.right);
-            	printf("MOV ");
-            	genCode(ast->assignment_statement.left);
-            	printf(", tempVar%d;\n",exp_index-1);
-            }
+			else {
+				if (!is_expression(ast->assignment_statement.right->kind)) {
+					printf("MOV ");
+					genCode(ast->assignment_statement.left);
+					printf(", ");
+					genCode(ast->assignment_statement.right);
+					printf(";\n");
+			  }
+			  else {
+				  int exp_index = genCode(ast->assignment_statement.right);
+				  printf("MOV ");
+				  genCode(ast->assignment_statement.left);
+				  printf(", tempVar%d;\n",exp_index-1);
+			  }
+			}
             break;
 		} 
         case IF_ELSE_STATEMENT_NODE:{
