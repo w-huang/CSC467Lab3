@@ -252,7 +252,7 @@ int genCode(node* ast) {
             else {
             	int exp_index = genCode(ast->assignment_declaration.expression);
             	printf("TEMP %s;\n", ast->assignment_declaration.identifier);
-            	printf("MOV %s,tempVar%d;\n", ast->assignment_declaration.identifier, exp_index-1);
+            	printf("MOV %s,tmpVar%d;\n", ast->assignment_declaration.identifier, exp_index-1);
             }
             break;
             
@@ -264,7 +264,7 @@ int genCode(node* ast) {
             }
             else {
             	int exp_index = genCode(ast->const_assignment.expression);
-            	printf("PARAM %s = tempVar%d;\n", ast->const_assignment.identifier, exp_index-1);
+            	printf("PARAM %s = tmpVar%d;\n", ast->const_assignment.identifier, exp_index-1);
             }
             break;
             
@@ -294,7 +294,7 @@ int genCode(node* ast) {
 								int LHS = genCode(ast->assignment_statement.left);
 								printf(", ");
 								printf("condVar%d", i);
-								printf(", tempVar%d, OriginalValueBubble;\n", RHS);
+								printf(", tmpVar%d, OriginalValueBubble;\n", RHS);
 							} else {
 								printf("CMP ");
 								int LHS = genCode(ast->assignment_statement.left);
@@ -313,7 +313,7 @@ int genCode(node* ast) {
 								int LHS = genCode(ast->assignment_statement.left);
 								printf(", ");
 								printf("condVar%d", i);
-								printf(", OriginalValueBubble, tempVar%d;\n", RHS);
+								printf(", OriginalValueBubble, tmpVar%d;\n", RHS);
 							} else {
 								printf("CMP ");
 								int LHS = genCode(ast->assignment_statement.left);
@@ -347,7 +347,7 @@ int genCode(node* ast) {
 				  int exp_index = genCode(ast->assignment_statement.right);
 				  printf("MOV ");
 				  genCode(ast->assignment_statement.left);
-				  printf(", tempVar%d;\n",exp_index-1);
+				  printf(", tmpVar%d;\n",exp_index-1);
 			  }
 			}
             break;
@@ -362,7 +362,7 @@ int genCode(node* ast) {
 			{
 					//need to put result into a temp first
 				int cond_index = genCode(ast->if_else_statement.condition);
-				printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
+				printf("MOV condVar%d, tmpVar%d;\n", condVarCount, cond_index);
 			}
 			else 
 			{
@@ -396,7 +396,7 @@ int genCode(node* ast) {
 			{
 					//need to put result into a temp first
 				int cond_index = genCode(ast->if_statement.condition);
-				printf("MOV condVar%d, tempVar%d;\n", condVarCount, cond_index);
+				printf("MOV condVar%d, tmpVar%d;\n", condVarCount, cond_index);
 			}
 			else 
 			{
@@ -510,7 +510,7 @@ int genCode(node* ast) {
 				tempVar_count++;
 
 				if (left_expression) {
-        			printf("MUL tmpVar%d,tmpVar%d,tempVar%d;\n",tempVar_count,left_index-1,tempVar_count-1);
+        			printf("MUL tmpVar%d,tmpVar%d,tmpVar%d;\n",tempVar_count,left_index-1,tempVar_count-1);
 				}
 				else {
 					printf("MUL tmpVar%d,",tempVar_count);  
