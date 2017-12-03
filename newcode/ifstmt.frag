@@ -6,7 +6,7 @@
 		temp[2] = gl_Color[2];
 		temp[3] = gl_Color[3] * gl_FragCoord[0] * gl_FragCoord[1];
         if (false) {
-            temp[0] = 0;
+            temp[0] = 0.0;
         } else {
             temp[0] = 4.0;
         }
