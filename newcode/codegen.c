@@ -274,11 +274,10 @@ int genCode(node* ast) {
 			if(top > 0) {
 				//we are in some then/else blocks
 
-				//preserve the original value in a tempVar for CMP
-				tempVar_count++;
-				
+				//preserve the original value in a tempVar for CMP				
 				if (!initializedOriginalValue) {
 					printf("TEMP OriginalValueBubble;\n");
+					initializedOriginalValue = 1;
 				}
 				printf("MOV OriginalValueBubble,");
 				genCode(ast->assignment_statement.left);
